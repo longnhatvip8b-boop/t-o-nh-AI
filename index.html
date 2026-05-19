@@ -8,9 +8,10 @@
         :root {
             --primary: #00ffcc;
             --secondary: #9900ff;
-            --bg-dark: #09090e;
-            --panel-bg: rgba(20, 20, 30, 0.5);
-            --border-glow: rgba(0, 255, 204, 0.2);
+            --bg-dark: #06060b;
+            --panel-bg: rgba(15, 15, 25, 0.6);
+            --border-glow: rgba(0, 255, 204, 0.25);
+            --accent-glow: rgba(153, 0, 255, 0.4);
         }
 
         body {
@@ -18,8 +19,8 @@
             padding: 0;
             background: var(--bg-dark);
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(0, 255, 204, 0.12), transparent 30%),
-                radial-gradient(circle at 85% 30%, rgba(153, 0, 255, 0.12), transparent 30%);
+                radial-gradient(circle at 15% 30%, rgba(0, 255, 204, 0.15), transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(153, 0, 255, 0.15), transparent 40%);
             color: #fff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -33,249 +34,282 @@
         h1 {
             color: var(--primary);
             text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: 0 0 5px var(--primary), 0 0 20px rgba(0, 255, 204, 0.4);
-            margin-top: 35px;
-            margin-bottom: 5px;
-            font-size: 32px;
+            letter-spacing: 5px;
+            text-shadow: 0 0 8px var(--primary), 0 0 25px rgba(0, 255, 204, 0.5);
+            margin-top: 40px;
+            margin-bottom: 6px;
+            font-size: 36px;
             text-align: center;
+            font-weight: 900;
         }
         .subtitle {
-            color: #aaa;
+            color: #b5b5bc;
             font-size: 14px;
-            margin-bottom: 25px;
-            letter-spacing: 1px;
+            margin-bottom: 30px;
+            letter-spacing: 1.5px;
             text-align: center;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
         #app-container {
             width: 92%;
-            max-width: 800px;
+            max-width: 850px;
             background: var(--panel-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--border-glow);
             border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.65);
+            padding: 35px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.02);
             display: flex;
             flex-direction: column;
-            gap: 22px;
+            gap: 24px;
             box-sizing: border-box;
         }
 
         /* Tabs điều hướng */
         .mode-tabs {
             display: flex;
-            gap: 8px;
-            border-bottom: 2px solid #222;
-            padding-bottom: 12px;
+            gap: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 14px;
         }
         .tab-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid #333;
-            color: #888;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #8a8a93;
             font-size: 15px;
             font-weight: bold;
-            padding: 10px 20px;
-            border-radius: 12px;
+            padding: 12px 24px;
+            border-radius: 14px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .tab-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
         }
         .tab-btn.active {
             color: var(--primary);
-            background: rgba(0, 255, 204, 0.1);
+            background: rgba(0, 255, 204, 0.12);
             border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.15);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
         }
 
         /* Khung chứa các cài đặt tùy chỉnh nâng cao */
         .settings-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px;
-            border-radius: 14px;
-            border: 1px solid #222;
+            gap: 18px;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
         label { 
             color: var(--primary); 
             font-size: 15px; 
             font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         select {
-            background: #121218;
-            border: 1px solid #444;
+            background: #0d0d13;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
-            padding: 10px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 12px;
             font-size: 14px;
             outline: none;
             cursor: pointer;
-            transition: border 0.2s;
+            transition: all 0.2s;
         }
         select:focus {
             border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
         }
 
         textarea {
             width: 100%;
-            height: 100px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid #333;
-            border-radius: 14px;
+            height: 110px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
             color: #fff;
-            padding: 15px;
+            padding: 16px;
             font-size: 15px;
+            line-height: 1.5;
             resize: none;
             box-sizing: border-box;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         textarea:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 12px rgba(0, 255, 204, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.25);
+            background: rgba(0, 0, 0, 0.5);
         }
 
         /* Panel Image-to-Image */
         #image-inspiration-panel {
             display: none;
-            background: rgba(255, 255, 255, 0.02);
-            border: 2px dashed #444;
-            border-radius: 14px;
-            padding: 18px;
+            background: rgba(153, 0, 255, 0.03);
+            border: 2px dashed rgba(153, 0, 255, 0.3);
+            border-radius: 16px;
+            padding: 20px;
             text-align: center;
+            transition: all 0.3s;
         }
         #image-inspiration-panel.active { display: block; }
         
         .upload-zone {
             position: relative;
             cursor: pointer;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #333;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             display: inline-block;
+            transition: all 0.2s;
+        }
+        .upload-zone:hover {
+            border-color: var(--secondary);
+            background: rgba(153, 0, 255, 0.05);
         }
         .upload-zone input[type="file"] {
             position: absolute; left: 0; top: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;
         }
 
         #preview-inspiration-img {
-            max-width: 140px;
-            max-height: 140px;
-            margin-top: 12px;
-            border-radius: 10px;
+            max-width: 160px;
+            max-height: 160px;
+            margin-top: 15px;
+            border-radius: 12px;
             display: none;
-            border: 2px solid var(--primary);
+            border: 2px solid var(--secondary);
             object-fit: cover;
+            box-shadow: 0 0 15px rgba(153, 0, 255, 0.3);
         }
 
         /* Lưới chọn Style */
         .style-options {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 8px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
         }
         .style-btn {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid #333;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: #ccc;
-            padding: 10px 8px;
-            border-radius: 12px;
+            padding: 12px 10px;
+            border-radius: 14px;
             cursor: pointer;
             font-size: 13px;
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            transition: all 0.2s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .style-btn:hover { background: rgba(255, 255, 255, 0.08); }
+        .style-btn:hover { 
+            background: rgba(255, 255, 255, 0.08); 
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
         .style-btn.active {
-            background: rgba(0, 255, 204, 0.15);
+            background: linear-gradient(135deg, rgba(0, 255, 204, 0.2), rgba(153, 0, 255, 0.1));
             border-color: var(--primary);
             color: var(--primary);
             font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 255, 204, 0.15);
         }
 
         #generate-btn {
-            background: linear-gradient(45deg, var(--primary), #00b3ff);
+            background: linear-gradient(45deg, var(--primary), #00b3ff, var(--secondary));
+            background-size: 200% auto;
             color: #000;
             border: none;
-            padding: 16px;
-            font-size: 17px;
+            padding: 18px;
+            font-size: 18px;
             font-weight: 800;
-            border-radius: 14px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 5px 20px rgba(0, 255, 204, 0.3);
-            margin-top: 5px;
+            letter-spacing: 1.5px;
+            box-shadow: 0 6px 25px rgba(0, 255, 204, 0.35);
+            margin-top: 8px;
+        }
+        #generate-btn:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 255, 204, 0.5);
         }
         #generate-btn:disabled {
-            background: #222;
+            background: #1a1a24;
             color: #555;
             cursor: not-allowed;
             box-shadow: none;
+            transform: none;
         }
 
         /* Container kết quả tối ưu hiển thị */
         #result-container {
             width: 100%;
-            min-height: 380px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 20px;
+            min-height: 400px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 22px;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
             overflow: hidden;
-            border: 2px dashed #333;
+            border: 2px dashed rgba(255, 255, 255, 0.06);
             box-sizing: border-box;
-            padding: 10px;
+            padding: 12px;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
         }
         
         #result-image {
             width: 100%;
             height: auto;
-            max-height: 550px;
-            border-radius: 14px;
+            max-height: 580px;
+            border-radius: 16px;
             display: none;
             object-fit: contain;
-            box-shadow: 0 0 25px rgba(0, 255, 204, 0.25);
+            box-shadow: 0 10px 40px rgba(0, 255, 204, 0.3);
         }
 
         #loading {
             display: none;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 18px;
             text-align: center;
         }
         .loader {
-            width: 55px;
-            height: 55px;
+            width: 60px;
+            height: 60px;
             border: 4px solid transparent;
             border-top-color: var(--primary);
             border-bottom-color: var(--secondary);
             border-radius: 50%;
-            animation: spin 0.9s linear infinite;
+            animation: spin 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         .loading-text {
             color: var(--primary);
             font-size: 15px;
             line-height: 1.6;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
@@ -313,15 +347,15 @@
                 <label>Tỷ lệ khung hình:</label>
                 <select id="aspect-ratio">
                     <option value="1:1" selected>1:1 (Ảnh Vuông)</option>
-                    <option value="16:9">16:9 (Màn Ảnh Rộng)</option>
-                    <option value="9:16">9:16 (Màn Hình Dọc Điện Thoại)</option>
+                    <option value="16:9">16:9 (Màn Ảnh Rộng VIP)</option>
+                    <option value="9:16">9:16 (Màn Hình Dọc Phone)</option>
                 </select>
             </div>
             <div class="input-group">
                 <label>Mức độ xử lý AI:</label>
                 <select id="enhance-level">
                     <option value="false">Mặc định (Tốc độ cao)</option>
-                    <option value="true" selected>Siêu việt (Tăng cường chi tiết)</option>
+                    <option value="true" selected>Siêu việt (Tăng cường chi tiết VIP)</option>
                 </select>
             </div>
             <div class="input-group">
@@ -339,13 +373,13 @@
             <label>2. Chọn phong cách hình ảnh mong muốn:</label>
             <div class="style-options">
                 <button class="style-btn active" data-style="">Không bộ lọc</button>
-                <button class="style-btn" data-style="high quality anime art, studio ghibli illustration, detailed">Anime / Manga</button>
-                <button class="style-btn" data-style="cyberpunk aesthetic, neon city illumination, futuristic 3d rendering">Cyberpunk</button>
-                <button class="style-btn" data-style="photorealistic photography, ultra detailed 8k cinematic lighting, canon lens">Siêu Thực</button>
-                <button class="style-btn" data-style="3d model, claymation style, cute clay world background">Đất sét (Clay)</button>
-                <button class="style-btn" data-style="gta v loading screen artwork style, cell shaded vector illustration">GTA V Art</button>
-                <button class="style-btn" data-style="lego brick construction layout, high block definition toy portrait">Đồ chơi Lego</button>
-                <button class="style-btn" data-style="pencil sketch drawing portrait, cross hatch shader line art texturing">Phác thảo chì</button>
+                <button class="style-btn" data-style="masterpiece, high quality anime art, studio ghibli dynamic illustration, vibrant aesthetic, detailed sharp keys, makoto shinkai vibe">Anime / Manga</button>
+                <button class="style-btn" data-style="intricate cyberpunk aesthetic, futuristic neon city illumination, cinematic 3d rendering, ray tracing, flawless neon details, photorealistic octane render">Cyberpunk</button>
+                <button class="style-btn" data-style="award-winning photorealistic photography, ultra detailed 8k cinematic lighting, moody depth of field, sharp hyperrealistic focus, professional canon lens, masterpiece">Siêu Thực</button>
+                <button class="style-btn" data-style="charming 3d model, detailed claymation style, cute clay world environment background, soft studio lighting, stop-motion look">Đất sét (Clay)</button>
+                <button class="style-btn" data-style="gta v loading screen artwork style, highly detailed cell shaded vector illustration, rockstar games aesthetic, high contrast dramatic poster">GTA V Art</button>
+                <button class="style-btn" data-style="creative lego brick construction layout, high block definition toy portrait, detailed lego pieces, macro miniature depth">Đồ chơi Lego</button>
+                <button class="style-btn" data-style="exquisite pencil sketch drawing portrait, cross hatch shader line art texturing, hand-drawn fine details, vintage graphite masterpiece">Phác thảo chì</button>
             </div>
         </div>
         
@@ -455,6 +489,12 @@
 
             // Gộp style và làm sạch ký tự lạ có thể phá hỏng chuỗi URL mã hóa
             let rawPrompt = selectedStyle ? `${promptText}, ${selectedStyle}` : promptText;
+            
+            // BUFF VIP: Tự động bơm thêm Prompt cao cấp bí mật nếu bật chế độ Siêu Việt nhằm tăng độ bám sát ý muốn và độ sắc nét
+            if (enhance === "true") {
+                rawPrompt = `${rawPrompt}, highly aesthetic masterwork, extremely detailed textures, flawless composition, elegant global illumination, trending on artstation art portfolios`;
+            }
+
             rawPrompt = rawPrompt.replace(/[^a-zA-Z0-9 ,]/g, '');
 
             if (currentMode === 'image') {
@@ -480,6 +520,7 @@
             imageBypassLoader.onload = function() {
                 // Tải thành công tuyệt đối! Gán ảnh vào giao diện và hiển thị rộng mở
                 resultImage.src = this.src;
+                document.getElementById('loading').style.style.display = 'none'; // Dự phòng lỗi cú pháp hiển thị
                 document.getElementById('loading').style.display = 'none';
                 resultImage.style.display = 'block';
                 toggleUIState(false);
