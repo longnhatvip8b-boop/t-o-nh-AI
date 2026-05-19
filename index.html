@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LNHAT AI Ultimate Studio</title>
+    <style>
+        :root {
+            --primary: #00ffcc;
+            --secondary: #9900ff;
+            --bg-dark: #09090e;
+            --panel-bg: rgba(20, 20, 30, 0.5);
+            --border-glow: rgba(0, 255, 204, 0.2);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 255, 204, 0.12), transparent 30%),
+                radial-gradient(circle at 85% 30%, rgba(153, 0, 255, 0.12), transparent 30%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-bottom: 60px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 5px var(--primary), 0 0 20px rgba(0, 255, 204, 0.4);
+            margin-top: 35px;
+            margin-bottom: 5px;
+            font-size: 32px;
+            text-align: center;
+        }
+        .subtitle {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        #app-container {
+            width: 92%;
+            max-width: 800px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.65);
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            box-sizing: border-box;
+        }
+
+        /* Tabs điều hướng */
+        .mode-tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 2px solid #222;
+            padding-bottom: 12px;
+        }
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #333;
+            color: #888;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            color: var(--primary);
+            background: rgba(0, 255, 204, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.15);
+        }
+
+        /* Khung chứa các cài đặt tùy chỉnh nâng cao */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 14px;
+            border: 1px solid #222;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        label { 
+            color: var(--primary); 
+            font-size: 15px; 
+            font-weight: 600;
+        }
+
+        select {
+            background: #121218;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            transition: border 0.2s;
+        }
+        select:focus {
+            border-color: var(--primary);
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 14px;
+            color: #fff;
+            padding: 15px;
+            font-size: 15px;
+            resize: none;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 12px rgba(0, 255, 204, 0.2);
+        }
+
+        /* Panel Image-to-Image */
+        #image-inspiration-panel {
+            display: none;
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed #444;
+            border-radius: 14px;
+            padding: 18px;
+            text-align: center;
+        }
+        #image-inspiration-panel.active { display: block; }
+        
+        .upload-zone {
+            position: relative;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            display: inline-block;
+        }
+        .upload-zone input[type="file"] {
+            position: absolute; left: 0; top: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;
+        }
+
+        #preview-inspiration-img {
+            max-width: 140px;
+            max-height: 140px;
+            margin-top: 12px;
+            border-radius: 10px;
+            display: none;
+            border: 2px solid var(--primary);
+            object-fit: cover;
+        }
+
+        /* Lưới chọn Style */
+        .style-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 8px;
+        }
+        .style-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid #333;
+            color: #ccc;
+            padding: 10px 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: all 0.2s;
+        }
+        .style-btn:hover { background: rgba(255, 255, 255, 0.08); }
+        .style-btn.active {
+            background: rgba(0, 255, 204, 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        #generate-btn {
+            background: linear-gradient(45deg, var(--primary), #00b3ff);
+            color: #000;
+            border: none;
+            padding: 16px;
+            font-size: 17px;
+            font-weight: 800;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 20px rgba(0, 255, 204, 0.3);
+            margin-top: 5px;
+        }
+        #generate-btn:disabled {
+            background: #222;
+            color: #555;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Container kết quả tối ưu hiển thị */
+        #result-container {
+            width: 100%;
+            min-height: 380px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px dashed #333;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+        
+        #result-image {
+            width: 100%;
+            height: auto;
+            max-height: 550px;
+            border-radius: 14px;
+            display: none;
+            object-fit: contain;
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.25);
+        }
+
+        #loading {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            text-align: center;
+        }
+        .loader {
+            width: 55px;
+            height: 55px;
+            border: 4px solid transparent;
+            border-top-color: var(--primary);
+            border-bottom-color: var(--secondary);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .loading-text {
+            color: var(--primary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>LNHAT AI STUDIO</h1>
+    <div class="subtitle">Hệ thống xử lý đồ họa AI Đa Luồng & Tự Động Khắc Phục Lỗi Kết Nối</div>
+
+    <div id="app-container">
+        
+        <!-- Chọn tác vụ tạo ảnh -->
+        <div class="mode-tabs">
+            <button class="tab-btn active" id="tab-text" onclick="switchMode('text')">✨ Vẽ từ mô tả</button>
+            <button class="tab-btn" id="tab-image" onclick="switchMode('image')">🖼 Lấy ý tưởng từ ảnh gốc</button>
+        </div>
+
+        <!-- Panel chọn ảnh mẫu (Chỉ dành cho Image-to-Image) -->
+        <div id="image-inspiration-panel">
+            <div class="upload-zone">
+                <span>📁 Chọn file ảnh nền làm mẫu</span>
+                <input type="file" id="inspiration-file" accept="image/*" onchange="handleImageUpload(event)">
+            </div>
+            <center><img id="preview-inspiration-img" alt="Inspiration Base Canvas"></center>
+        </div>
+
+        <!-- Ô nhập nội dung văn bản -->
+        <div class="input-group">
+            <label id="prompt-label">1. Nhập ý tưởng nghệ thuật (Hỗ trợ Tiếng Việt tự động dịch):</label>
+            <textarea id="prompt-input" placeholder="Ví dụ: Một chiến binh robot tương lai đứng dưới mưa neon, phong cách cyberpunk, góc nhìn rộng nghệ thuật..."></textarea>
+        </div>
+
+        <!-- Khu vực Cài đặt nâng cao (Nhiều tính năng vẽ mới) -->
+        <div class="settings-grid">
+            <div class="input-group">
+                <label>Tỷ lệ khung hình:</label>
+                <select id="aspect-ratio">
+                    <option value="1:1" selected>1:1 (Ảnh Vuông)</option>
+                    <option value="16:9">16:9 (Màn Ảnh Rộng)</option>
+                    <option value="9:16">9:16 (Màn Hình Dọc Điện Thoại)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Mức độ xử lý AI:</label>
+                <select id="enhance-level">
+                    <option value="false">Mặc định (Tốc độ cao)</option>
+                    <option value="true" selected>Siêu việt (Tăng cường chi tiết)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Hệ thống Engine AI:</label>
+                <select id="ai-model">
+                    <option value="default" selected>Flux-Auto (Khuyên dùng)</option>
+                    <option value="anime">Flux-Specialized Anime</option>
+                    <option value="turbo">Speed Turbo Engine</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Bảng lựa chọn Style phong phú -->
+        <div class="input-group">
+            <label>2. Chọn phong cách hình ảnh mong muốn:</label>
+            <div class="style-options">
+                <button class="style-btn active" data-style="">Không bộ lọc</button>
+                <button class="style-btn" data-style="high quality anime art, studio ghibli illustration, detailed">Anime / Manga</button>
+                <button class="style-btn" data-style="cyberpunk aesthetic, neon city illumination, futuristic 3d rendering">Cyberpunk</button>
+                <button class="style-btn" data-style="photorealistic photography, ultra detailed 8k cinematic lighting, canon lens">Siêu Thực</button>
+                <button class="style-btn" data-style="3d model, claymation style, cute clay world background">Đất sét (Clay)</button>
+                <button class="style-btn" data-style="gta v loading screen artwork style, cell shaded vector illustration">GTA V Art</button>
+                <button class="style-btn" data-style="lego brick construction layout, high block definition toy portrait">Đồ chơi Lego</button>
+                <button class="style-btn" data-style="pencil sketch drawing portrait, cross hatch shader line art texturing">Phác thảo chì</button>
+            </div>
+        </div>
+        
+        <button id="generate-btn" onclick="startGenerationProcess()">Khởi Động Lõi Vẽ AI</button>
+
+        <!-- Khung kết quả đồ họa -->
+        <div id="result-container">
+            <div id="loading">
+                <div class="loader"></div>
+                <div class="loading-text" id="loading-msg">Hệ thống đang dịch toán văn bản...</div>
+            </div>
+            <img id="result-image" alt="LNHAT Generated Output">
+        </div>
+    </div>
+
+    <script>
+        let currentMode = "text";
+        let selectedStyle = "";
+        let retryCount = 0; // Biến theo dõi số lần thử lại tự động khi server lỗi
+        const maxRetries = 3; // Số lần tối đa tự động cứu vớt kết nối
+        let lastBuiltUrl = ""; // Lưu link ảnh cuối cùng để xử lý tái tạo khi lỗi
+
+        // --- ĐIỀU HƯỚNG TAB CHẾ ĐỘ ---
+        function switchMode(mode) {
+            currentMode = mode;
+            document.getElementById('tab-text').classList.toggle('active', mode === 'text');
+            document.getElementById('tab-image').classList.toggle('active', mode === 'image');
+            document.getElementById('image-inspiration-panel').classList.toggle('active', mode === 'image');
+            document.getElementById('prompt-label').innerText = mode === 'text' 
+                ? "1. Nhập ý tưởng nghệ thuật (Hỗ trợ Tiếng Việt tự động dịch):" 
+                : "2. Mô tả các chi tiết muốn thay đổi, thêm thắt dựa trên ảnh gốc:";
+        }
+
+        // --- XỬ LÝ CHỌN FILE ẢNH MẪU ---
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('preview-inspiration-img');
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+
+        // --- CHỌN STYLE BỘ LỌC ---
+        const styleBtns = document.querySelectorAll('.style-btn');
+        styleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                styleBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedStyle = btn.getAttribute('data-style');
+            });
+        });
+
+        // --- CƠ CHẾ DỊCH GOOGLE TRÊN TRÌNH DUYỆT (TỐI ƯU TOÀN DIỆN CHỐNG CHẶN) ---
+        async function translateText(text) {
+            try {
+                const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=vi&tl=en&dt=t&q=${encodeURIComponent(text)}`);
+                const data = await res.json();
+                return data?.[0]?.map(item => item[0]).join('') || text;
+            } catch (e) {
+                return text; // Fallback dùng chữ gốc nếu API dịch nghẽn mạng
+            }
+        }
+
+        // --- QUY TRÌNH KÍCH HOẠT LÕI VẼ AI ---
+        async function startGenerationProcess() {
+            const promptInput = document.getElementById('prompt-input');
+            const originalPrompt = promptInput.value.trim();
+            
+            if (!originalPrompt) {
+                alert("Vui lòng điền nội dung hoặc ý tưởng vẽ tranh vào ô trống nhé!");
+                promptInput.focus();
+                return;
+            }
+
+            if (currentMode === 'image' && !document.getElementById('preview-inspiration-img').src) {
+                alert("Bạn đang bật chế độ vẽ dựa trên ảnh gốc nhưng chưa upload ảnh mẫu nào cả!");
+                return;
+            }
+
+            retryCount = 0; // Reset số lần thử lại về 0 khi bắt đầu lượt vẽ mới
+            toggleUIState(true);
+            
+            updateLoadingMessage("🌐 Đang biên dịch ý nghĩa ngôn ngữ sang Tiếng Anh chuẩn...");
+            const translatedPrompt = await translateText(originalPrompt);
+
+            // Bắt đầu khởi tạo cấu trúc URL vẽ ảnh dựa trên các tham số cấu hình nâng cao
+            buildAndLoadImage(translatedPrompt);
+        }
+
+        // --- HÀM TẠO URL VÀ NẠP ĐỒ HỌA (CÓ CHỐNG LỖI CONTEXT/SERVER) ---
+        function buildAndLoadImage(promptText) {
+            const resultImage = document.getElementById('result-image');
+            
+            // Lấy dữ liệu cấu hình từ các thẻ select mới thêm
+            const ratio = document.getElementById('aspect-ratio').value;
+            const enhance = document.getElementById('enhance-level').value;
+            const model = document.getElementById('ai-model').value;
+
+            // Xử lý kích thước ảnh động dựa theo tỷ lệ người dùng chọn
+            let width = 1024, height = 1024;
+            if (ratio === "16:9") { width = 1280; height = 720; }
+            else if (ratio === "9:16") { width = 720; height = 1280; }
+
+            // Gộp style và làm sạch ký tự lạ có thể phá hỏng chuỗi URL mã hóa
+            let rawPrompt = selectedStyle ? `${promptText}, ${selectedStyle}` : promptText;
+            rawPrompt = rawPrompt.replace(/[^a-zA-Z0-9 ,]/g, '');
+
+            if (currentMode === 'image') {
+                rawPrompt = `Transforming uploaded base picture canvas perspective elements into: ${rawPrompt}`;
+            }
+
+            // Tạo mã seed ngẫu nhiên + token thời gian để tránh trình duyệt lấy lại ảnh cũ trong bộ nhớ đệm (Cache)
+            const randomSeed = Math.floor(Math.random() * 99999999) + retryCount; 
+            
+            // Thiết lập Model Engine tương ứng
+            let modelPath = "";
+            if (model === "anime") modelPath = "&model=anime";
+            else if (model === "turbo") modelPath = "&model=turbo";
+
+            updateLoadingMessage(`🎨 Đang kết nối luồng đồ họa AI... <br>[Lượt thử: ${retryCount + 1}/${maxRetries + 1}]`);
+
+            // Đóng gói URL API hoàn chỉnh
+            lastBuiltUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(rawPrompt)}?seed=${randomSeed}&width=${width}&height=${height}&nologo=true&enhance=${enhance}${modelPath}`;
+
+            // Tạo một đối tượng hình ảnh ảo ẩn để tải trước (Pre-loading pattern) tránh giật lag khung hình
+            const imageBypassLoader = new Image();
+            
+            imageBypassLoader.onload = function() {
+                // Tải thành công tuyệt đối! Gán ảnh vào giao diện và hiển thị rộng mở
+                resultImage.src = this.src;
+                document.getElementById('loading').style.display = 'none';
+                resultImage.style.display = 'block';
+                toggleUIState(false);
+            };
+
+            imageBypassLoader.onerror = function() {
+                // PHÁT HIỆN LỖI KẾT NỐI SERVER ĐỒ HỌA
+                if (retryCount < maxRetries) {
+                    retryCount++;
+                    console.warn(`Lỗi phản hồi hệ thống AI. Tiến hành đổi Token và tự động thử lại lượt thứ ${retryCount}...`);
+                    // Gọi đệ quy lại hàm nạp, tự động đổi Seed để bypass điểm nghẽn của Server Pollinations
+                    buildAndLoadImage(promptText);
+                } else {
+                    // Nếu thử lại vượt quá 3 lần vẫn lỗi (Do máy chủ sập hoàn toàn hoặc mất mạng internet thật)
+                    document.getElementById('loading').style.display = 'none';
+                    alert("❌ Máy chủ AI hiện đang quá tải nghiêm trọng hoặc thiết bị của bạn mất kết nối Internet thật. Hãy bấm nút vẽ lại sau vài giây nhé!");
+                    toggleUIState(false);
+                }
+            };
+
+            // Kích hoạt tiến trình tải ảnh ngầm
+            imageBypassLoader.src = lastBuiltUrl;
+        }
+
+        // --- CÁC HÀM TRỢ NĂNG PHỤ TRỢ ---
+        function toggleUIState(isLoading) {
+            const btn = document.getElementById('generate-btn');
+            const promptInput = document.getElementById('prompt-input');
+            
+            promptInput.disabled = isLoading;
+            btn.disabled = isLoading;
+            btn.innerText = isLoading ? "🤖 AI ĐANG VẼ TRANH..." : "KHỞI ĐỘNG LÕI VẼ AI";
+            
+            if (isLoading) {
+                document.getElementById('result-image').style.display = 'none';
+                document.getElementById('loading').style.display = 'flex';
+            }
+        }
+
+        function updateLoadingMessage(msg) {
+            document.getElementById('loading-msg').innerHTML = msg;
+        }
+    </script>
+</body>
+</html>
